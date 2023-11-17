@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <button onClick={clicktonotify}>
+      <button onClick={() => clicktonotify()}>
         click here
       </button>
     </>
