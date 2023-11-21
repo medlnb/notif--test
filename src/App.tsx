@@ -1,29 +1,51 @@
-import './App.css'
-function showNotification(title:string, options:any) {
-  if ("Notification" in window && Notification.permission === "granted") {
-    navigator.serviceWorker.ready.then((registration) => {
-      registration.showNotification(title, options);
-    });
-    console.log("kaka")
-  }
-}
+import './App.css';
+
+
+
+
 function App() {
-  if ("Notification" in window) {
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification permission granted");
-      } else {
-        console.warn("Notification permission denied");
-      }
-    });
+  // Client-Side JavaScript (App.tsx or another appropriate file)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function (registration) {
+        console.log('Service Worker registered with scope:', registration.scope);
+
+        // Wait until the service worker is activated
+        return navigator.serviceWorker.ready;
+      })
+      .then(function () {
+        showWelcomeNotification();
+      })
+      .catch(function (error) {
+        console.error('Service Worker registration failed:', error);
+      });
   }
-  showNotification("New Task Added", {
-    body: "Check out the new task from your teacher.",
-  });
+
+  function showWelcomeNotification() {
+    if (Notification.permission === 'granted') {
+      new Notification('Welcome!', {
+        body: 'Hello, welcome to our website!',
+        icon: 'path/to/icon.png',
+      });
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === 'granted') {
+          new Notification('Welcome!', {
+            body: 'Hello, welcome to our website!',
+            icon: 'path/to/icon.png',
+          });
+        }
+      });
+    }
+  }
+
   return (
     <>
+      <button >
+        Request Notification Permission
+      </button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
