@@ -8,7 +8,7 @@ function App() {
 
   // Client-Side JavaScript (App.tsx or another appropriate file)
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
+    navigator.serviceWorker.register('./service-worker.js')
       .then(function (registration) {
         console.log('Service Worker registered with scope:', registration.scope);
 
