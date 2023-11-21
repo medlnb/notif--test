@@ -4,6 +4,8 @@ import './App.css';
 
 
 function App() {
+  navigator.serviceWorker.register('service-worker.js')
+
   // Client-Side JavaScript (App.tsx or another appropriate file)
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
@@ -32,7 +34,6 @@ function App() {
         if (permission === 'granted') {
           new Notification('Welcome!', {
             body: 'Hello, welcome to our website!',
-            icon: 'path/to/icon.png',
           });
         }
       });
